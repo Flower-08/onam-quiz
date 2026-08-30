@@ -89,16 +89,16 @@ st.divider()
 
 def load_teams():
 
-```
-if os.path.exists("existing_teams.json"):
 
-    with open("existing_teams.json", "r") as file:
+    if os.path.exists("existing_teams.json"):
 
-        return json.load(file)
+        with open("existing_teams.json", "r") as file:
 
-else:
+            return json.load(file)
 
-    return [
+    else:
+
+        return [
 
         {
             "membership_number": "1",
