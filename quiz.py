@@ -189,7 +189,7 @@ def load_teams():
         }
 
     ]
-```
+
 
 existing_teams = load_teams()
 
