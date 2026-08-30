@@ -219,7 +219,7 @@ def save_teams():
 
 quiz_dict_10 = [
 
-```
+
 {"question": "Which festival is celebrated in Kerala in honour of King Mahabali?", "answer": "Onam"},
 {"question": "Who is the king associated with Onam?", "answer": "Mahabali"},
 {"question": "What is the flower decoration made during Onam called?", "answer": "Pookalam"},
@@ -270,7 +270,7 @@ quiz_dict_10 = [
 {"question": "What is the famous Kerala festival celebrated with Sadya and Pookalam?", "answer": "Onam"},
 {"question": "What is the legendary king remembered during Onam?", "answer": "Mahabali"},
 {"question": "What is the biggest festival celebrated in Kerala?", "answer": "Onam"}
-```
+
 
 ]
 
@@ -282,7 +282,7 @@ quiz_dict_10 = [
 
 quiz_dict_20 = [
 
-```
+
 {"question": "Which festival is celebrated in Kerala in honour of King Mahabali?", "answer": "Onam"},
 {"question": "Who is the legendary king associated with Onam?", "answer": "Mahabali"},
 {"question": "What is the flower decoration made during Onam called?", "answer": "Pookalam"},
@@ -333,7 +333,7 @@ quiz_dict_20 = [
 {"question": "What is the traditional flower arrangement made over several days during Onam?", "answer": "Pookalam"},
 {"question": "Which legendary ruler is remembered for a time of prosperity and equality?", "answer": "Mahabali"},
 {"question": "Which festival is known as Kerala's harvest festival?", "answer": "Onam"}
-```
+
 
 ]
 
@@ -345,7 +345,7 @@ quiz_dict_20 = [
 
 quiz_dict_20_plus = [
 
-```
+
 {"question": "Which festival is celebrated in Kerala in honour of King Mahabali?", "answer": "Onam"},
 {"question": "Who is the legendary king associated with Onam?", "answer": "Mahabali"},
 {"question": "What is the flower decoration made during Onam called?", "answer": "Pookalam"},
@@ -397,7 +397,7 @@ quiz_dict_20_plus = [
 {"question": "What is the annual visit of Mahabali celebrated through?", "answer": "Onam"},
 {"question": "Which traditional feast contains many vegetarian dishes served together?", "answer": "Sadya"},
 {"question": "Which festival celebrates Mahabali's return to Kerala?", "answer": "Onam"}
-```
+
 
 ]
 
@@ -430,16 +430,16 @@ st.session_state.score_saved = False
 
 if st.session_state.page == "login":
 
-```
-st.subheader("🌼 Enter Your Team Details")
 
-membership_number = st.text_input(
-    "🔢 Membership Number"
-)
-
-last_name = st.text_input(
-    "👨‍👩‍👧‍👦 Confirm Your Last Name"
-)
+    st.subheader("🌼 Enter Your Team Details")
+    
+    membership_number = st.text_input(
+        "🔢 Membership Number"
+    )
+    
+    last_name = st.text_input(
+        "👨‍👩‍👧‍👦 Confirm Your Last Name"
+    )
 
 
 if st.button("🌸 CONTINUE 🌸"):
@@ -485,7 +485,7 @@ if st.button("🌸 CONTINUE 🌸"):
         st.session_state.page = "player_details"
 
         st.rerun()
-```
+
 
 # =========================================================
 
@@ -495,19 +495,19 @@ if st.button("🌸 CONTINUE 🌸"):
 
 elif st.session_state.page == "player_details":
 
-```
-st.subheader("🌸 Welcome to the 2026 AKGMA Onam Quiz!")
 
-first_name = st.text_input(
-    "👤 What is your first name?"
-)
-
-age = st.number_input(
-    "🎂 What is your age?",
-    min_value=1,
-    max_value=120,
-    step=1
-)
+    st.subheader("🌸 Welcome to the 2026 AKGMA Onam Quiz!")
+    
+    first_name = st.text_input(
+        "👤 What is your first name?"
+    )
+    
+    age = st.number_input(
+        "🎂 What is your age?",
+        min_value=1,
+        max_value=120,
+        step=1
+    )
 
 
 if st.button("🌼 START QUIZ 🌼"):
@@ -633,7 +633,7 @@ if st.button("🌼 START QUIZ 🌼"):
                 st.session_state.page = "quiz"
 
                 st.rerun()
-```
+
 
 # =========================================================
 
@@ -730,7 +730,7 @@ if st.button("🌼 SUBMIT ANSWER 🌼"):
         st.session_state.question_number += 1
 
         st.rerun()
-```
+
 
 # =========================================================
 
@@ -740,27 +740,27 @@ if st.button("🌼 SUBMIT ANSWER 🌼"):
 
 elif st.session_state.page == "finished":
 
-```
-current_team = next(
 
-    team for team in existing_teams
-
-    if team["membership_number"]
-
-    ==
-
-    st.session_state.membership_number
-
-)
-
-
-player_number = st.session_state.player_number
+    current_team = next(
+    
+        team for team in existing_teams
+    
+        if team["membership_number"]
+    
+        ==
+    
+        st.session_state.membership_number
+    
+    )
+    
+    
+    player_number = st.session_state.player_number
 
 
 if not st.session_state.score_saved:
 
     current_team[f"score{player_number}"] = str(
-        st.session_state.score
+       st.session_state.score
     )
 
 
@@ -801,7 +801,7 @@ st.write(
 st.markdown(
     "## 🌸 🛶 🌼 👑 🥭 🌺 🍌 🥥 🌼 🛶 🌸"
 )
-```
+
 
 # =========================================================
 
@@ -811,16 +811,16 @@ st.markdown(
 
 elif st.session_state.page == "admin":
 
-```
-st.markdown(
-    "# 👑 ADMIN AREA 👑"
-)
 
-
-password = st.text_input(
-    "Enter administrator password",
-    type="password"
-)
+    st.markdown(
+        "# 👑 ADMIN AREA 👑"
+    )
+    
+    
+    password = st.text_input(
+        "Enter administrator password",
+        type="password"
+    )
 
 
 if st.button("🔐 LOGIN"):
