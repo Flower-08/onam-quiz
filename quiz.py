@@ -201,14 +201,14 @@ existing_teams = load_teams()
 
 def save_teams():
 
-```
-with open("existing_teams.json", "w") as file:
 
-    json.dump(
-        existing_teams,
-        file,
-        indent=4
-    )
+    with open("existing_teams.json", "w") as file:
+    
+        json.dump(
+            existing_teams,
+            file,
+            indent=4
+        )
 ```
 
 # =========================================================
