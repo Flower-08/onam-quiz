@@ -408,19 +408,19 @@ quiz_dict_20_plus = [
 # =========================================================
 
 if "page" not in st.session_state:
-st.session_state.page = "login"
+    st.session_state.page = "login"
 
 if "question_number" not in st.session_state:
-st.session_state.question_number = 0
+    st.session_state.question_number = 0
 
 if "score" not in st.session_state:
-st.session_state.score = 0
+    st.session_state.score = 0
 
 if "questions" not in st.session_state:
-st.session_state.questions = []
+    st.session_state.questions = []
 
 if "score_saved" not in st.session_state:
-st.session_state.score_saved = False
+    st.session_state.score_saved = False
 
 # =========================================================
 
@@ -643,10 +643,10 @@ if st.button("🌼 START QUIZ 🌼"):
 
 elif st.session_state.page == "quiz":
 
-```
-questions = st.session_state.questions
 
-question_number = st.session_state.question_number
+    questions = st.session_state.questions
+    
+    question_number = st.session_state.question_number
 
 
 if question_number >= len(questions):
@@ -970,4 +970,4 @@ if st.button("🔐 LOGIN"):
         st.error(
             "❌ Incorrect password!"
         )
-```
+
