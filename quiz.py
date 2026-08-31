@@ -809,7 +809,7 @@ st.markdown(
 
 # =========================================================
 
-elif st.session_state.page == "admin":
+if st.session_state.page == "admin":
 
 
     st.markdown(
@@ -823,13 +823,13 @@ elif st.session_state.page == "admin":
     )
 
 
-if st.button("🔐 LOGIN"):
-
-    if password == "administrator password":
-
-        st.success(
-            "Welcome, Administrator!"
-        )
+    if st.button("🔐 LOGIN"):
+    
+        if password == "administrator password":
+    
+            st.success(
+                "Welcome, Administrator!"
+            )
 
 
         u10_scores = []
