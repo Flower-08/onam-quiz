@@ -443,7 +443,7 @@ if st.session_state.page == "login":
 
 
 if st.button("🌸 CONTINUE 🌸"):
-
+    membership_number = st.text_input("Enter your membership number")
     if membership_number.lower().strip() == "admin":
 
         st.session_state.page = "admin"
