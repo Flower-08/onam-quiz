@@ -645,163 +645,110 @@ elif st.session_state.page == "quiz":
 
 
     questions = st.session_state.questions
-    
     question_number = st.session_state.question_number
 
+    if question_number >= len(questions):
+        st.session_state.page = "finished"
+        st.rerun()
 
-if question_number >= len(questions):
+    question = questions[question_number]
 
-    st.session_state.page = "finished"
+    st.subheader(
+        f"🌼 Question {question_number + 1} of 10 🌼"
+    )
 
-    st.rerun()
+    st.progress(
+        question_number / len(questions)
+    )
 
+    st.markdown(
+        f"""
+        <div class="quiz-box">
+        <h3>🌸 {question["question"]}</h3>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-question = questions[question_number]
+    answer = st.text_input(
+        "✏️ Your answer",
+        key=f"answer_{question_number}"
+    )
 
+    if st.button("🌼 SUBMIT ANSWER 🌼"):
 
-st.subheader(
-    f"🌼 Question {question_number + 1} of 10 🌼"
-)
+        if not answer.strip():
 
-
-st.progress(
-    question_number / len(questions)
-)
-
-
-st.markdown(
-
-    f"""
-    <div class="quiz-box">
-
-    <h3>
-    🌸 {question["question"]}
-    </h3>
-
-    </div>
-    """,
-
-    unsafe_allow_html=True
-
-)
-
-
-answer = st.text_input(
-    "✏️ Your answer",
-    key=f"answer_{question_number}"
-)
-
-
-if st.button("🌼 SUBMIT ANSWER 🌼"):
-
-    if not answer.strip():
-
-        st.warning(
-            "Please enter an answer!"
-        )
-
-
-    else:
-
-        if (
-
-            answer.lower().strip()
-
-            ==
-
-            question["answer"].lower().strip()
-
-        ):
-
-            st.success(
-                "🎉 Correct! Well done! 🌸"
+            st.warning(
+                "Please enter an answer!"
             )
-
-            st.session_state.score += 1
-
 
         else:
 
-            st.error(
-                f"❌ Incorrect! The correct answer was: {question['answer']}"
-            )
+            if answer.lower().strip() == question["answer"].lower().strip():
 
+                st.success(
+                    "🎉 Correct! Well done! 🌸"
+                )
 
-        st.session_state.question_number += 1
+                st.session_state.score += 1
 
-        st.rerun()
+            else:
+
+                st.error(
+                    f"❌ Incorrect! The correct answer was: {question['answer']}"
+                )
+
+            st.session_state.question_number += 1
+            st.rerun()
 
 
 # =========================================================
-
 # FINISHED PAGE
-
 # =========================================================
 
 elif st.session_state.page == "finished":
 
-
     current_team = next(
-    
         team for team in existing_teams
-    
         if team["membership_number"]
-    
-        ==
-    
-        st.session_state.membership_number
-    
+        == st.session_state.membership_number
     )
-    
-    
+
     player_number = st.session_state.player_number
 
+    if not st.session_state.score_saved:
 
-if not st.session_state.score_saved:
+        current_team[f"score{player_number}"] = str(
+            st.session_state.score
+        )
 
-    current_team[f"score{player_number}"] = str(
-       st.session_state.score
+        current_team["score"] = str(
+            int(current_team["score"])
+            + st.session_state.score
+        )
+
+        save_teams()
+
+        st.session_state.score_saved = True
+
+    st.balloons()
+
+    st.markdown(
+        "# 🌸🌼 QUIZ FINISHED! 🌼🌸"
     )
 
-
-    current_team["score"] = str(
-
-        int(current_team["score"])
-
-        +
-
-        st.session_state.score
-
+    st.success(
+        "🎉 Your score has been added to your team total!"
     )
 
+    st.write(
+        "Thank you for playing the 2026 AKGMA Onam Quiz!"
+    )
 
-    save_teams()
-
-    st.session_state.score_saved = True
-
-
-st.balloons()
-
-
-st.markdown(
-    "# 🌸🌼 QUIZ FINISHED! 🌼🌸"
-)
-
-
-st.success(
-    "🎉 Your score has been added to your team total!"
-)
-
-
-st.write(
-    "Thank you for playing the 2026 AKGMA Onam Quiz!"
-)
-
-
-st.markdown(
-    "## 🌸 🛶 🌼 👑 🥭 🌺 🍌 🥥 🌼 🛶 🌸"
-)
-
+    st.markdown(
+        "## 🌸 🛶 🌼 👑 🥭 🌺 🍌 🥥 🌼 🛶 🌸"
+    )
 
 # =========================================================
 
