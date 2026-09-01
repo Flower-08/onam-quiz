@@ -587,137 +587,137 @@ elif st.session_state.page == "admin":
 
         if password == "administrator password":
 
-        st.success(
-            "Welcome, Administrator! 🌸"
-        )
-    
-        u10_scores = []
-        u20_scores = []
-        u20_plus_scores = []
-    
-        for team in existing_teams:
-    
-            for number in range(1, 5):
-    
-                if team[f"player{number}"]:
-    
-                    player_age = int(
-                        team[f"age{number}"]
-                    )
-    
-                    player_score = int(
-                        team[f"score{number}"]
-                    )
-    
-                    player_name = (
-                        team[f"player{number}"]
-                        + " "
-                        + team["last_name"]
-                    )
-    
-                    if player_age <= 10:
-    
-                        u10_scores.append(
-                            (player_score, player_name)
-                        )
-    
-                    elif player_age <= 20:
-    
-                        u20_scores.append(
-                            (player_score, player_name)
-                        )
-    
-                    else:
-    
-                        u20_plus_scores.append(
-                            (player_score, player_name)
-                        )
-    
-        u10_scores.sort(reverse=True)
-        u20_scores.sort(reverse=True)
-        u20_plus_scores.sort(reverse=True)
-    
-        st.divider()
-    
-        st.subheader("🌼 UNDER 10 TOP 5 🌼")
-    
-        if u10_scores:
-            for score, name in u10_scores[:5]:
-                st.write(f"🏆 {name} — {score}")
-        else:
-            st.write("No scores yet.")
-    
-        st.divider()
-    
-        st.subheader("🌼 UNDER 20 TOP 5 🌼")
-    
-        if u20_scores:
-            for score, name in u20_scores[:5]:
-                st.write(f"🏆 {name} — {score}")
-        else:
-            st.write("No scores yet.")
-    
-        st.divider()
-    
-        st.subheader("🌼 OVER 20 TOP 5 🌼")
-    
-        if u20_plus_scores:
-            for score, name in u20_plus_scores[:5]:
-                st.write(f"🏆 {name} — {score}")
-        else:
-            st.write("No scores yet.")
-    
-        # =========================================================
-        # RESET LEADERBOARD
-        # =========================================================
-    
-        st.divider()
-    
-        st.subheader("⚠️ RESET LEADERBOARD")
-    
-        st.warning(
-            "This will clear all players, ages, individual scores, "
-            "and team scores."
-        )
-    
-        if st.button(
-            "🔄 RESET LEADERBOARD",
-            use_container_width=True
-        ):
-    
-            for team in existing_teams:
-    
-                supabase.table("teams").update({
-                    "score": 0,
-    
-                    "player1": None,
-                    "age1": None,
-                    "score1": 0,
-    
-                    "player2": None,
-                    "age2": None,
-                    "score2": 0,
-    
-                    "player3": None,
-                    "age3": None,
-                    "score3": 0,
-    
-                    "player4": None,
-                    "age4": None,
-                    "score4": 0
-                }).eq(
-                    "id", team["id"]
-                ).execute()
-    
             st.success(
-                "🎉 Leaderboard has been reset successfully!"
+                "Welcome, Administrator! 🌸"
             )
-    
-            st.rerun()
-    
-    else:
-    
-        st.error(
-            "❌ Incorrect password."
-        )
-    
+        
+            u10_scores = []
+            u20_scores = []
+            u20_plus_scores = []
+        
+            for team in existing_teams:
+        
+                for number in range(1, 5):
+        
+                    if team[f"player{number}"]:
+        
+                        player_age = int(
+                            team[f"age{number}"]
+                        )
+        
+                        player_score = int(
+                            team[f"score{number}"]
+                        )
+        
+                        player_name = (
+                            team[f"player{number}"]
+                            + " "
+                            + team["last_name"]
+                        )
+        
+                        if player_age <= 10:
+        
+                            u10_scores.append(
+                                (player_score, player_name)
+                            )
+        
+                        elif player_age <= 20:
+        
+                            u20_scores.append(
+                                (player_score, player_name)
+                            )
+        
+                        else:
+        
+                            u20_plus_scores.append(
+                                (player_score, player_name)
+                            )
+        
+            u10_scores.sort(reverse=True)
+            u20_scores.sort(reverse=True)
+            u20_plus_scores.sort(reverse=True)
+        
+            st.divider()
+        
+            st.subheader("🌼 UNDER 10 TOP 5 🌼")
+        
+            if u10_scores:
+                for score, name in u10_scores[:5]:
+                    st.write(f"🏆 {name} — {score}")
+            else:
+                st.write("No scores yet.")
+        
+            st.divider()
+        
+            st.subheader("🌼 UNDER 20 TOP 5 🌼")
+        
+            if u20_scores:
+                for score, name in u20_scores[:5]:
+                    st.write(f"🏆 {name} — {score}")
+            else:
+                st.write("No scores yet.")
+        
+            st.divider()
+        
+            st.subheader("🌼 OVER 20 TOP 5 🌼")
+        
+            if u20_plus_scores:
+                for score, name in u20_plus_scores[:5]:
+                    st.write(f"🏆 {name} — {score}")
+            else:
+                st.write("No scores yet.")
+        
+            # =========================================================
+            # RESET LEADERBOARD
+            # =========================================================
+        
+            st.divider()
+        
+            st.subheader("⚠️ RESET LEADERBOARD")
+        
+            st.warning(
+                "This will clear all players, ages, individual scores, "
+                "and team scores."
+            )
+        
+            if st.button(
+                "🔄 RESET LEADERBOARD",
+                use_container_width=True
+            ):
+        
+                for team in existing_teams:
+        
+                    supabase.table("teams").update({
+                        "score": 0,
+        
+                        "player1": None,
+                        "age1": None,
+                        "score1": 0,
+        
+                        "player2": None,
+                        "age2": None,
+                        "score2": 0,
+        
+                        "player3": None,
+                        "age3": None,
+                        "score3": 0,
+        
+                        "player4": None,
+                        "age4": None,
+                        "score4": 0
+                    }).eq(
+                        "id", team["id"]
+                    ).execute()
+        
+                st.success(
+                    "🎉 Leaderboard has been reset successfully!"
+                )
+        
+                st.rerun()
+        
+        else:
+        
+            st.error(
+                "❌ Incorrect password."
+            )
+        
