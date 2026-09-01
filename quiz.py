@@ -379,14 +379,12 @@ elif st.session_state.page == "player":
 
             already_played = False
 
-            for number in range(1, 5):
-                if (
-                    current_team[f"player{number}"]
-                    .strip()
-                    .lower()
-                    == first_name.lower()
-                ):
-                    already_played = True
+            if (
+                current_team[f"player{number}"]
+                and current_team[f"player{number}"].strip().lower()
+                == first_name.lower()
+            ):
+                already_played = True
 
             if already_played:
 
