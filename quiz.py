@@ -164,97 +164,50 @@ quiz_dict_20_plus = [
 
 
 # =========================================================
-# LOAD TEAMS
+# SUPABASE DATABASE
 # =========================================================
 
-def load_teams():
-    if os.path.exists("existing_teams.json"):
-        with open("existing_teams.json", "r") as file:
-            return json.load(file)
+def get_teams():
 
-    return [
-        {
-            "membership_number": "1",
-            "last_name": "Sredha",
-            "score": "0",
-            "age1": "",
-            "player1": "",
-            "score1": "0",
-            "age2": "",
-            "player2": "",
-            "score2": "0",
-            "age3": "",
-            "player3": "",
-            "score3": "0",
-            "age4": "",
-            "player4": "",
-            "score4": "0"
-        },
-        {
-            "membership_number": "2",
-            "last_name": "Sreya",
-            "score": "0",
-            "age1": "",
-            "player1": "",
-            "score1": "0",
-            "age2": "",
-            "player2": "",
-            "score2": "0",
-            "age3": "",
-            "player3": "",
-            "score3": "0",
-            "age4": "",
-            "player4": "",
-            "score4": "0"
-        },
-        {
-            "membership_number": "3",
-            "last_name": "Sanchu",
-            "score": "0",
-            "age1": "",
-            "player1": "",
-            "score1": "0",
-            "age2": "",
-            "player2": "",
-            "score2": "0",
-            "age3": "",
-            "player3": "",
-            "score3": "0",
-            "age4": "",
-            "player4": "",
-            "score4": "0"
-        },
-        {
-            "membership_number": "4",
-            "last_name": "Smitha",
-            "score": "0",
-            "age1": "",
-            "player1": "",
-            "score1": "0",
-            "age2": "",
-            "player2": "",
-            "score2": "0",
-            "age3": "",
-            "player3": "",
-            "score3": "0",
-            "age4": "",
-            "player4": "",
-            "score4": "0"
-        }
-    ]
+    response = (
+        supabase
+        .table("teams")
+        .select("*")
+        .execute()
+    )
+
+    return response.data
 
 
-# =========================================================
-# SAVE TEAMS
-# =========================================================
+def save_team(team):
 
-def save_teams():
-    with open("existing_teams.json", "w") as file:
-        json.dump(existing_teams, file, indent=4)
+    (
+        supabase
+        .table("teams")
+        .update({
+            "membership_number": team["membership_number"],
+            "last_name": team["last_name"],
+            "score": int(team["score"]),
 
+            "player1": team["player1"],
+            "age1": team["age1"],
+            "score1": int(team["score1"]),
 
-existing_teams = load_teams()
+            "player2": team["player2"],
+            "age2": team["age2"],
+            "score2": int(team["score2"]),
 
+            "player3": team["player3"],
+            "age3": team["age3"],
+            "score3": int(team["score3"]),
+
+            "player4": team["player4"],
+            "age4": team["age4"],
+            "score4": int(team["score4"])
+        })
+        .eq("id", team["id"])
+        .execute()
+    )
 
 # =========================================================
 # SESSION STATE
@@ -306,7 +259,7 @@ st.divider()
 # =========================================================
 
 if st.session_state.page == "login":
-
+    existing_teams = get_teams()    
     st.markdown("## 🌼 Enter Your Team Details")
 
     st.info(
@@ -371,7 +324,7 @@ if st.session_state.page == "login":
 # =========================================================
 
 elif st.session_state.page == "player":
-
+    existing_teams = get_teams()
     st.markdown("## 🌸 Player Details 🌸")
 
     st.info(
@@ -432,7 +385,7 @@ elif st.session_state.page == "player":
                 player_number = None
 
                 for number in range(1, 5):
-                    if current_team[f"player{number}"] == "":
+                    if not current_team[f"player{number}"]:
 
                         current_team[f"player{number}"] = first_name
                         current_team[f"age{number}"] = str(age)
@@ -448,7 +401,7 @@ elif st.session_state.page == "player":
 
                 else:
 
-                    save_teams()
+                    save_team(current_team)
 
                     st.session_state.first_name = first_name
                     st.session_state.age = age
@@ -553,7 +506,7 @@ elif st.session_state.page == "quiz":
 # =========================================================
 
 elif st.session_state.page == "finished":
-
+    existing_teams = get_teams()
     current_team = next(
         team for team in existing_teams
         if team["membership_number"]
@@ -573,7 +526,7 @@ elif st.session_state.page == "finished":
             + st.session_state.score
         )
 
-        save_teams()
+        save_team(current_team)
 
         st.session_state.score_saved = True
 
@@ -601,7 +554,9 @@ elif st.session_state.page == "finished":
 # =========================================================
 
 elif st.session_state.page == "admin":
-
+    
+    
+    existing_teams = get_teams()
     st.markdown("# 👑 ADMIN AREA 👑")
 
     st.info(
@@ -633,7 +588,7 @@ elif st.session_state.page == "admin":
 
                 for number in range(1, 5):
 
-                    if team[f"player{number}"] != "":
+                    if team[f"player{number}"]:
 
                         player_age = int(
                             team[f"age{number}"]
