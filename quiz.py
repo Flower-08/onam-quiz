@@ -264,30 +264,48 @@ if st.session_state.page == "login":
 
     st.markdown("## 🌼 Enter Your Team Details")
 
-    membership_number = st.text_input(
-        "🔢 Membership Number",
-        key="login_membership"
+    st.info(
+        "🌸 Enter your membership number and last name, "
+        "then CLICK the CONTINUE button below. 🌸"
     )
 
-    last_name = st.text_input(
-        "👨‍👩‍👧‍👦 Confirm Your Last Name",
-        key="login_last_name"
-    )
+    with st.form("login_form"):
 
-    if st.button("🌸 CONTINUE 🌸", use_container_width=True):
+        membership_number = st.text_input(
+            "🔢 Membership Number",
+            placeholder="Enter your membership number",
+            key="login_membership"
+        )
 
-        # TEMPORARY DEBUG
-        st.write("Membership entered:", repr(membership_number))
-        st.write("Last name entered:", repr(last_name))
+        last_name = st.text_input(
+            "👨‍👩‍👧‍👦 Confirm Your Last Name",
+            placeholder="Enter your last name",
+            key="login_last_name"
+        )
+
+        submitted = st.form_submit_button(
+            "🌸 CONTINUE 🌸",
+            use_container_width=True
+        )
+
+    if submitted:
 
         membership_number = membership_number.strip()
         last_name = last_name.strip()
 
-        if membership_number == "" or last_name == "":
-            st.warning("Please enter BOTH fields.")
+        if membership_number.lower() == "admin":
+
+            st.session_state.page = "admin"
+            st.rerun()
+
+        elif membership_number == "" or last_name == "":
+
+            st.warning(
+                "🌼 Please enter BOTH your membership number "
+                "and last name, then click CONTINUE."
+            )
 
         else:
-            st.success("The inputs are being received!")
 
             current_team = next(
                 (
@@ -301,16 +319,18 @@ if st.session_state.page == "login":
             )
 
             if current_team is None:
-                st.error("❌ Membership number and last name did not match.")
 
-                # SHOW DATABASE DATA TEMPORARILY
-                st.write("Teams found in Supabase:")
-                st.write(existing_teams)
+                st.error(
+                    "❌ The membership number and last name "
+                    "did not match."
+                )
 
             else:
+
                 st.session_state.membership_number = membership_number
                 st.session_state.last_name = last_name
                 st.session_state.page = "player"
+
                 st.rerun()
 # =========================================================
 # PLAYER DETAILS PAGE
