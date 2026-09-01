@@ -599,7 +599,10 @@ elif st.session_state.page == "admin":
         
                 for number in range(1, 5):
         
-                    if team[f"player{number}"]:
+                    if (
+                        team[f"player{number}"]
+                        and team[f"player{number}"] != "NULL"
+                    ):
         
                         player_age = int(
                             team[f"age{number}"]
