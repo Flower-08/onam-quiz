@@ -187,23 +187,23 @@ def save_team(team):
         .update({
             "membership_number": team["membership_number"],
             "last_name": team["last_name"],
-            "score": int(team["score"]),
+            "score": int(team["score"] or 0),
 
-            "player1": team["player1"],
-            "age1": team["age1"],
-            "score1": int(team["score1"]),
+            "player1": team["player1"] or None,
+            "age1": int(team["age1"]) if team["age1"] else None,
+            "score1": int(team["score1"] or 0),
 
-            "player2": team["player2"],
-            "age2": team["age2"],
-            "score2": int(team["score2"]),
+            "player2": team["player2"] or None,
+            "age2": int(team["age2"]) if team["age2"] else None,
+            "score2": int(team["score2"] or 0),
 
-            "player3": team["player3"],
-            "age3": team["age3"],
-            "score3": int(team["score3"]),
+            "player3": team["player3"] or None,
+            "age3": int(team["age3"]) if team["age3"] else None,
+            "score3": int(team["score3"] or 0),
 
-            "player4": team["player4"],
-            "age4": team["age4"],
-            "score4": int(team["score4"])
+            "player4": team["player4"] or None,
+            "age4": int(team["age4"]) if team["age4"] else None,
+            "score4": int(team["score4"] or 0)
         })
         .eq("id", team["id"])
         .execute()
@@ -381,7 +381,7 @@ elif st.session_state.page == "player":
                     if not current_team[f"player{number}"]:
 
                         current_team[f"player{number}"] = first_name
-                        current_team[f"age{number}"] = str(age)
+                        current_team[f"age{number}"] = age
 
                         player_number = number
                         break
@@ -510,12 +510,10 @@ elif st.session_state.page == "finished":
 
     if not st.session_state.score_saved:
 
-        current_team[f"score{player_number}"] = str(
-            st.session_state.score
-        )
+        current_team[f"score{player_number}"] = st.session_state.score
 
-        current_team["score"] = str(
-            int(current_team["score"])
+        current_team["score"] = (
+            int(current_team["score"] or 0)
             + st.session_state.score
         )
 
