@@ -162,7 +162,7 @@ quiz_dict_20_plus = [
 # =========================================================
 
 def load_teams():
-    if os.path.exists("existing_teams.json"):
+    if False:
         with open("existing_teams.json", "r") as file:
             return json.load(file)
 
