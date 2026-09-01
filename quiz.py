@@ -2,7 +2,14 @@ import streamlit as st
 import random
 from supabase import create_client
 
+SUPABASE_URL = "https://nfuzcvjkjniwnbaorsjp.supabase.co"
 
+SUPABASE_KEY = "sb_publishable_udgXeZZ8k-IqjAB7Nzpqng_M_RSMOAw"
+
+supabase = create_client(
+    SUPABASE_URL,
+    SUPABASE_KEY
+)
 # =========================================================
 # PAGE SETTINGS
 # =========================================================
