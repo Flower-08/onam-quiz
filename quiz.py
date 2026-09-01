@@ -6,6 +6,7 @@ SUPABASE_URL = "https://nfuzcvjkjniwnbaorsjp.supabase.co"
 
 SUPABASE_KEY = "sb_publishable_udgXeZZ8k-IqjAB7Nzpqng_M_RSMOAw"
 
+
 supabase = create_client(
     SUPABASE_URL,
     SUPABASE_KEY
@@ -308,15 +309,15 @@ if st.session_state.page == "login":
         else:
 
             current_team = next(
-                (
-                    team for team in existing_teams
-                    if str(team["membership_number"]).strip()
-                    == membership_number
-                    and str(team["last_name"]).strip().lower()
-                    == last_name.lower()
-                ),
-                None
-            )
+            (
+                team for team in existing_teams
+                if str(team["membership_number"]).strip()
+                == str(membership_number).strip()
+                and str(team["last_name"]).strip().lower()
+                == str(last_name).strip().lower()
+            ),
+            None
+        )
 
             if current_team is None:
 
