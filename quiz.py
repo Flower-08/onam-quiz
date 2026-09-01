@@ -1,7 +1,6 @@
 import streamlit as st
-import json
 import random
-import os
+from supabase import create_client
 
 
 # =========================================================
