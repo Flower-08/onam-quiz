@@ -264,44 +264,30 @@ if st.session_state.page == "login":
 
     st.markdown("## 🌼 Enter Your Team Details")
 
-    st.info(
-        "🌸 Enter your membership number and last name, "
-        "then CLICK the CONTINUE button below. 🌸"
-    )
-
     membership_number = st.text_input(
         "🔢 Membership Number",
-        key="login_membership",
-        placeholder="Enter your membership number"
+        key="login_membership"
     )
 
     last_name = st.text_input(
         "👨‍👩‍👧‍👦 Confirm Your Last Name",
-        key="login_last_name",
-        placeholder="Enter your last name"
+        key="login_last_name"
     )
 
-    if st.button(
-        "🌸 CONTINUE 🌸",
-        use_container_width=True
-    ):
+    if st.button("🌸 CONTINUE 🌸", use_container_width=True):
+
+        # TEMPORARY DEBUG
+        st.write("Membership entered:", repr(membership_number))
+        st.write("Last name entered:", repr(last_name))
 
         membership_number = membership_number.strip()
         last_name = last_name.strip()
 
         if membership_number == "" or last_name == "":
-
-            st.warning(
-                "🌼 Please enter your membership number and last name, "
-                "then click CONTINUE."
-            )
-
-        elif membership_number.lower() == "admin":
-
-            st.session_state.page = "admin"
-            st.rerun()
+            st.warning("Please enter BOTH fields.")
 
         else:
+            st.success("The inputs are being received!")
 
             current_team = next(
                 (
@@ -315,20 +301,17 @@ if st.session_state.page == "login":
             )
 
             if current_team is None:
+                st.error("❌ Membership number and last name did not match.")
 
-                st.error(
-                    "❌ The membership number and last name did not match."
-                )
+                # SHOW DATABASE DATA TEMPORARILY
+                st.write("Teams found in Supabase:")
+                st.write(existing_teams)
 
             else:
-
                 st.session_state.membership_number = membership_number
                 st.session_state.last_name = last_name
                 st.session_state.page = "player"
-
                 st.rerun()
-
-
 # =========================================================
 # PLAYER DETAILS PAGE
 # =========================================================
