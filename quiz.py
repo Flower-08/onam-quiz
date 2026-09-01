@@ -261,7 +261,7 @@ st.divider()
 if st.session_state.page == "login":
 
     existing_teams = get_teams()
-
+    st.write(existing_teams)
     st.markdown("## 🌼 Enter Your Team Details")
 
     st.info(
@@ -672,3 +672,5 @@ elif st.session_state.page == "admin":
             st.error(
                 "❌ Incorrect password."
             )
+
+
